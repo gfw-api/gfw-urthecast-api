@@ -1,0 +1,13 @@
+develop:
+  extends:
+    file: base.yml
+    service: base
+  container_name: gfw-urthecast-api-develop
+  environment:
+    NODE_ENV: dev
+    API_GATEWAY_URL: http://192.168.99.100:8000
+    URTHECAST_KEY: <key>
+    URTHECAST_SECRET: <secret>
+  command: develop
+  volumes:
+    - ./app:/opt/gfw-urthecast-api/app

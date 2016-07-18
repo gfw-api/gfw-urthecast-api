@@ -1,0 +1,20 @@
+{
+    "logger": {
+        "name": "gfw-urthecast-api-DEV",
+        "level": "debug",
+        "toFile": false,
+        "dirLogFile": null
+    },
+    "service": {
+        "id": "gfw-urthecast-api_1.0.0",
+        "name": "GFW Urthecast API",
+        "port": 4200
+    },
+    "urthecast":{
+        "servers": ["a","b","c","d","e","f","g","h"],
+        "tileUrl": "https://tile-{server}.urthecast.com/v1",
+        "apiUrl": "https://api.urthecast.com/v1/archive/scenes",
+        "key": "",
+        "secret": ""
+    }
+}

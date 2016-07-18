@@ -1,0 +1,6 @@
+{
+    "urthecast":{
+        "key": "URTHECAST_KEY",
+        "secret": "URTHECAST_SECRET"
+    }
+}

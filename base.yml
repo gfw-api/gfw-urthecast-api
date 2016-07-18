@@ -1,0 +1,8 @@
+base:
+  build: .
+  ports:
+    - "4200:4200"
+  environment:
+    PORT: 4200
+    NODE_PATH: app/src
+  container_name: gfw-urthecast-api

@@ -1,0 +1,20 @@
+{
+    "id": "#(service.id)",
+    "name": "#(service.name)",
+    "urls": [{
+        "url": "/urthecast/map-tiles/rgb/:a/:b/:c",
+        "method": "GET",
+        "binary": true,
+        "endpoints": [{
+            "method": "GET",
+            "path": "/api/v1/urthecast/map-tiles/rgb/:a/:b/:c"
+        }]
+    }, {
+        "url": "/urthecast/archive/scenes",
+        "method": "GET",
+        "endpoints": [{
+            "method": "GET",
+            "path": "/api/v1/urthecast/archive/scenes"
+        }]
+    }]
+}
