@@ -1,9 +1,8 @@
 swagger: '2.0'
 info:
-  title: GFW Terrai Alerts API
-  description: Global Forest Watch - Terrai Alerts API. Deforestation alert system that monitors forest cover loss and forest degradation in the Brazilian Amazon
+  title: GFW Urthecast API
+  description: Global Forest Watch - Urthecast API.
   version: "1.0.0"
-host: example.vizzuality.com
 
 schemes:
   - https
@@ -12,164 +11,61 @@ schemes:
 produces:
   - application/vnd.api+json
 
+# will be prefixed to all paths
+basePath: /api/v1
+
 paths:
-  /imazon-alerts:
+  /map-tiles/{renderer}/{z}/{x}/{y}:
     get:
-      operationId: world
+      operationId: getTile
       produces:
-        - application/vnd.api+json
+        - image/png
       tags:
-        - IMAZON
+        - URTHECAST
       parameters:
-        - name: geostore
-          in: query
-          description: Hash of the geostore
+        - name: renderer
+          in: path
+          description: Renderer
           required: true
           type: string
-        - name: period
-          in: query
-          description: Period of time (default last day)
+        - name: z
+          in: path
+          description: z
           required: true
           type: string
-        - name: alertQuery
+        - name: x
+          in: path
+          description: x
+          required: true
+          type: string
+        - name: y
+          in: path
+          description: y
+          required: true
+          type: string
+        - name: cloud_coverage_lte
           in: query
-          description: Add minimun date and maximun date to the result
+          description: Average percentage of cloud coverage throughout the entire scene; calculated from its cloud mask. Maximum value. Example 30
           required: false
-          type: boolean
-      responses:
-        200:
-          description: Results obtained
-          schema:
-            $ref: '#/definitions/IMAZONALERTSAPI'
-        404:
-          description: Geostore not found
-          schema:
-            $ref: '#/definitions/Errors'
-        500:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Errors'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Errors'
-
-  /imazon-alerts/use/{name}/{id}:
-    get:
-      operationId: use
-      produces:
-        - application/vnd.api+json
-      tags:
-        - IMAZON
-      parameters:
-        - name: name
-          in: path
-          description: Analisys name (['mining', 'oilpalm', 'fiber', 'logging'])
-          required: true
           type: string
-        - name: id
-          in: path
-          description: cartodbid
-          required: true
-          type: integer
-        - name: period
+        - name: acquired_gte
           in: query
-          description: Period of time (default last day)
-          required: true
-          type: string
-        - name: alertQuery
-          in: query
-          description: Add minimun date and maximun date to the result
+          description: UTC date and time of when the scene's center was captured by the sensor_platform. Minimun date. Example 2016-07-20
           required: false
-          type: boolean
-      responses:
-        200:
-          description: Results obtained
-          schema:
-            $ref: '#/definitions/IMAZONALERTSAPI'
-        404:
-          description: Geostore not found
-          schema:
-            $ref: '#/definitions/Errors'
-        500:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Errors'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Errors'
-
-  /imazon-alerts/wdpa/{id}:
-    get:
-      operationId: wdpa
-      produces:
-        - application/vnd.api+json
-      tags:
-        - IMAZON
-      parameters:
-        - name: id
-          in: path
-          description: wdpa id
-          required: true
-          type: integer
-        - name: period
-          in: query
-          description: Period of time (default last day)
-          required: true
           type: string
-        - name: alertQuery
+        - name: acquired_lte
           in: query
-          description: Add minimun date and maximun date to the result
+          description: UTC date and time of when the scene was tiled and made available in the Urthecast archive. Maximun date. Example 2016-07-20
           required: false
-          type: boolean
-      responses:
-        200:
-          description: Results obtained
-          schema:
-            $ref: '#/definitions/IMAZONALERTSAPI'
-        404:
-          description: Geostore not found
-          schema:
-            $ref: '#/definitions/Errors'
-        500:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Errors'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Errors'
-
-  /imazon-alerts/admin/{iso}:
-    get:
-      description: a
-      operationId: getNational
-      produces:
-        - application/vnd.api+json
-      tags:
-        - IMAZON
-      parameters:
-        - name: iso
-          in: path
-          description: ISO code
-          required: true
           type: string
-        - name: period
+        - name: sensor_platform
           in: query
-          description: Period of time (default last day)
-          required: true
-          type: string
-        - name: alertQuery
-          in: query
-          description: Add minimun date and maximun date to the result
+          description: Identifies the sensor that was used to capture the scene. Example "landsat-8 theia deimos-1"
           required: false
-          type: boolean
+          type: string
       responses:
         200:
-          description: Results obtained
-          schema:
-            $ref: '#/definitions/IMAZONALERTSAPI'
+          description: Tile Image
         404:
           description: Geostore not found
           schema:
@@ -182,70 +78,54 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/Errors'
-
-  /imazon-alerts/admin/{iso}/{id1}:
+  /urthecast/archive/scenes:
     get:
-      operationId: getSubnational
+      operationId: getScenes
       produces:
         - application/vnd.api+json
       tags:
-        - IMAZON
+        - URTHECAST
       parameters:
-        - name: iso
-          in: path
-          description: ISO code
-          required: true
-          type: string
-        - name: id1
-          in: path
-          description: Region code
-          required: true
-          type: integer
-        - name: period
+        - name: geometry_intersects
           in: query
-          description: Period of time (default last day)
-          required: true
-          type: string
-        - name: alertQuery
-          in: query
-          description: Add minimun date and maximun date to the result
+          description: The geographic boundary of the scene. example POINT(<lng>+<lat>)
           required: false
-          type: boolean
-      responses:
-        200:
-          description: Results obtained
-          schema:
-            $ref: '#/definitions/IMAZONALERTSAPI'
-        404:
-          description: Geostore not found
-          schema:
-            $ref: '#/definitions/Errors'
-        500:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Errors'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Errors'
-
-  /imazon-alerts/latest:
-    get:
-      operationId: getLatest
-      produces:
-        - application/vnd.api+json
-      tags:
-        - IMAZON
-      parameters:
-        - name: limit
+          type: string
+        - name: cloud_coverage_lte
           in: query
-          description: Limit. Default 3
-          type: integer
+          description: Average percentage of cloud coverage throughout the entire scene; calculated from its cloud mask
+          required: false
+          type: string
+        - name: tiled_lte
+          in: query
+          description: UTC date and time of when the scene was tiled and made available in the Urthecast archive. Example 2016-07-20
+          required: false
+          type: string
+        - name: acquired_gte
+          in: query
+          description: UTC date and time of when the scene's center was captured by the sensor_platform. Minimun date. Example 2016-07-20
+          required: false
+          type: string
+        - name: acquired_lte
+          in: query
+          description: UTC date and time of when the scene was tiled and made available in the Urthecast archive. Maximun date. Example 2016-07-20
+          required: false
+          type: string
+        - name: sort
+          in: query
+          description: Sort. Example -acquired
+          required: false
+          type: string
+        - name: sensor_platform
+          in: query
+          description: Identifies the sensor that was used to capture the scene. Example "landsat-8 theia deimos-1"
+          required: false
+          type: string
       responses:
         200:
           description: Results obtained
           schema:
-            $ref: '#/definitions/IMAZONLATESTAPI'
+            $ref: '#/definitions/URTHECASTAPI'
         404:
           description: Geostore not found
           schema:
@@ -258,7 +138,6 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/Errors'
-
 
 definitions:
   Errors:
@@ -309,14 +188,14 @@ definitions:
       meta:
         type: object
         description: A meta object containing non-standard meta-information about the error.
-  IMAZONLATESTAPI:
+  URTHECASTAPI:
     type: object
     properties:
       data:
         properties:
           schema:
-            $ref: '#/definitions/IMAZONLATESTBody'
-  IMAZONLATESTBody:
+            $ref: '#/definitions/URTHECASTBody'
+  URTHECASTBody:
     type: object
     properties:
       type:
@@ -328,68 +207,62 @@ definitions:
       attributes:
         properties:
           schema:
-            $ref: '#/definitions/IMAZONLATESTModel'
+            $ref: '#/definitions/URTHECASTModel'
 
-  IMAZONLATESTModel:
+  URTHECASTModel:
     type: object
     properties:
-      date:
+      acquired:
         type: string
         format: date
-
-  IMAZONALERTSAPI:
-    type: object
-    properties:
-      data:
-        properties:
-          schema:
-            $ref: '#/definitions/IMAZONALERTSBody'
-
-  IMAZONALERTSBody:
-    type: object
-    properties:
-      type:
-        type: string
-        description: Resource type
-      id:
-        type: string
-        description: Resource id
-      attributes:
-        properties:
-          schema:
-            $ref: '#/definitions/IMAZONALERTSModel'
-
-  IMAZONALERTSModel:
-    type: object
-    properties:
-      value:
-        type: array
-        items:
-          type: object
-          properties:
-            data-type:
-              type: string
-            value:
-              type: number
-              format: float
-            min-date:
-              type: string
-              format: date-time
-            max-date:
-              type: string
-              format: date-time
-            period:
-              type: string
-      download-urls:
+      average_scene_altitude:
+        type: number
+        format: float
+      cloud_coverage:
+        type: number
+        format: float
+      earth_sun_distance:
+        type: number
+        format: float
+      geometry:
         type: object
         properties:
-          csv:
+          type:
             type: string
-          geojson:
-            type: string
-          kml:
-            type: string
-          shp:
-            type: string
-          svg:
-            type: string
+          coordinates:
+            type: array
+            items:
+              type: number
+      id:
+        type: string
+      owner:
+        type: string
+      owner_scene_id:
+        type: string
+      platform:
+        type: string
+      processed:
+        type: string
+        format: date
+      satellite_id:
+        type: number
+        format: float
+      scene_area:
+        type: number
+        format: float
+      season:
+        type: string
+      sensor_platform:
+        type: string
+      solar_time_of_day_acquired:
+        type: string
+        format: time
+      sun_azimuth:
+        type: number
+        format: float
+      sun_elevation:
+        type: number
+        format: float
+      tiled:
+        type: string
+        format: date

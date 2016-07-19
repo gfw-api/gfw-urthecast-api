@@ -55,7 +55,7 @@ class UrthecastRouter {
 
 }
 
-router.get('/map-tiles/rgb/:a/:b/:c', UrthecastRouter.getMapTiles);
+router.get('/map-tiles/:sat/:z/:x/:y', UrthecastRouter.getMapTiles);
 router.get('/archive/scenes', UrthecastRouter.archiveScenes);
 
 module.exports = router;
