@@ -36,7 +36,8 @@ class UrthecastRouter {
         var secret = config.get('urthecast.secret');
 
         try{
-            let url = `${baseUrl}?${this.request.search}&api_key=${key}&api_secret=${secret}`;
+            let url = `${baseUrl}${this.request.search}&api_key=${key}&api_secret=${secret}`;
+            logger.debug('url', url);
             let result = yield coRequest({
                 uri: url,
                 method: 'GET',
