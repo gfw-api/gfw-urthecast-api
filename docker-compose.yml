@@ -1,7 +1,7 @@
 prod:
   image: vizzuality/gfw-urthecast-api${STAGING}
   ports:
-    - "3600"
+    - "4200"
   env_file:
     - prod.env
   command: start

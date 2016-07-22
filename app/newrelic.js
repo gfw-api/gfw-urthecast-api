@@ -8,7 +8,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['GFW Quicc Alerts API'],
+  app_name: ['GFW Urthecast API'],
   /**
    * Your New Relic license key.
    */
