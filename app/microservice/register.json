@@ -1,6 +1,7 @@
 {
     "id": "#(service.id)",
     "name": "#(service.name)",
+    "tags": ["gfw"],
     "urls": [{
         "url": "/urthecast/map-tiles/rgb/:a/:b/:c",
         "method": "GET",
