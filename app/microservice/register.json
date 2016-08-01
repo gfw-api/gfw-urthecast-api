@@ -3,12 +3,12 @@
     "name": "#(service.name)",
     "tags": ["gfw"],
     "urls": [{
-        "url": "/urthecast/map-tiles/rgb/:a/:b/:c",
+        "url": "/urthecast/map-tiles/:renderer/:a/:b/:c",
         "method": "GET",
         "binary": true,
         "endpoints": [{
             "method": "GET",
-            "path": "/api/v1/urthecast/map-tiles/rgb/:a/:b/:c"
+            "path": "/api/v1/urthecast/map-tiles/:renderer/:a/:b/:c"
         }]
     }, {
         "url": "/urthecast/archive/scenes",
