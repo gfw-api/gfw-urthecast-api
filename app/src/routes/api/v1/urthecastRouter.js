@@ -25,6 +25,7 @@ class UrthecastRouter {
         var query = this.url.replace('urthecast/map-tiles/', '');
 
         var finalUrl = `${baseUrl.replace('{server}', server)}${query}&api_key=${key}&api_secret=${secret}`;
+        logger.debug('url', finalUrl);
         this.body = request(finalUrl);
 
     }
