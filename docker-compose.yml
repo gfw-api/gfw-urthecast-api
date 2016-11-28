@@ -1,11 +1,13 @@
 prod:
-  image: vizzuality/gfw-urthecast-api${STAGING}
+  image: vizzuality/gfw-urthecast-api:1.0.1${STAGING}
   ports:
     - "4200"
   env_file:
     - prod.env
   command: start
-  log_driver: "gelf"
+  dns: ${DNS_SERVER}
   restart: always
+  log_driver: "syslog"
   log_opt:
-    gelf-address: ${GELF_ADDRESS}
+    syslog-address: ${SYSLOG_ADDRESS}
+    tag: gfw-urthecast-api${STAGING}
