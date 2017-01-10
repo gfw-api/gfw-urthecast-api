@@ -22,7 +22,7 @@ class UrthecastRouter {
         var key = config.get('urthecast.key');
         var secret = config.get('urthecast.secret');
         let server = servers[Math.floor(Math.random() * servers.length)];
-        var query = this.url.replace('urthecast/map-tiles/', '');
+        var query = this.url.replace('urthecast/map-tiles/', '').replace(/&loggedUser=[^&]*/g, '');
 
         var finalUrl = `${baseUrl.replace('{server}', server)}${query}&api_key=${key}&api_secret=${secret}`;
         logger.debug('url', finalUrl);

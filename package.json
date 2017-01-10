@@ -1,6 +1,6 @@
 {
   "name": "gfw-urthecast-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Global forest watch - Urthecast API",
   "main": "index.js",
   "scripts": {
