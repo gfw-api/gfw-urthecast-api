@@ -1,5 +1,5 @@
 prod:
-  image: vizzuality/gfw-urthecast-api:1.0.1${STAGING}
+  image: vizzuality/gfw-urthecast-api:1.1.0${STAGING}
   ports:
     - "4200"
   env_file:
