@@ -3,7 +3,7 @@
     "name": "#(service.name)",
     "tags": ["gfw"],
     "urls": [{
-        "url": "/urthecast/map-tiles/:renderer/:a/:b/:c",
+        "url": "/v1/urthecast/map-tiles/:renderer/:a/:b/:c",
         "method": "GET",
         "binary": true,
         "endpoints": [{
@@ -11,7 +11,7 @@
             "path": "/api/v1/urthecast/map-tiles/:renderer/:a/:b/:c"
         }]
     }, {
-        "url": "/urthecast/archive/scenes",
+        "url": "/v1/urthecast/archive/scenes",
         "method": "GET",
         "endpoints": [{
             "method": "GET",
